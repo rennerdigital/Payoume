@@ -1,17 +1,82 @@
+
 <template>
-  <router-view />
+<div>
+  <div v-if="!mobile" class="app flex flex-column">
+    <Navigation />
+    <div class="app-content flex flex-column">
+      <router-view />
+    </div>
+  </div>
+  <div v-else class="mobile-message flex flex-column">
+    <h2>Sorry, unsupported by mobile</h2>
+    <p>Use a computer or tablet</p>
+  </div>
+</div>
 </template>
+
+<script>
+import Navigation from "./components/Navigation"
+export default {
+  data() {
+    return {
+      mobile: null,
+    }
+  },
+  components: {
+    Navigation
+  },
+  created() {
+    this.checkScreen();
+    window.addEventListener("resize", this.checkScreen);
+  },
+  methods: {
+    checkScreen() {
+      const windowWidth = window.innerWidth;
+      if (windowWidth <= 750) {
+        this.mobile = true;
+        return;
+      }
+      this.mobile = false;
+    }
+  }
+}
+</script>
 
 <style>
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap");
+
 * {
 	margin: 0;
 	padding: 0;
   box-sizing: border-box;
 	font-family: "Poppins", sans-serif;
-	background-color: #141625;
 }
- button, .button {
+
+.app {
+  background-color: #141625;
+  min-height: 100vh;
+}
+
+.app-content {
+  padding: 0 20px;
+  flex: 1;
+  position: relative;
+}
+
+.mobile-message {
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #141625;
+  color: #fff;
+}
+
+p {
+  margin-top: 16px;
+}
+
+button, .button {
 	cursor: pointer;
 	padding: 16px 24px;
 	border-radius: 30px;
@@ -90,5 +155,11 @@
 }
  .draft::before {
 	background-color: #dfe3fa;
+}
+
+@media (min-width: 900px) {
+  .app { 
+  flex-direction: row !important;
+  }
 }
 </style>
