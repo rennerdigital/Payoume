@@ -4,6 +4,7 @@
   <div v-if="!mobile" class="app flex flex-column">
     <Navigation />
     <div class="app-content flex flex-column">
+      <InvoiceModal />
       <router-view />
     </div>
   </div>
@@ -15,7 +16,8 @@
 </template>
 
 <script>
-import Navigation from "./components/Navigation"
+import Navigation from "./components/Navigation";
+import InvoiceModal from "./components/InvoiceModal";
 export default {
   data() {
     return {
